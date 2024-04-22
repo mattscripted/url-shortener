@@ -1,7 +1,10 @@
 const express = require('express');
-const bodyParser = require("body-parser");
+const path = require('path');
+const bodyParser = require('body-parser');
+
 
 const app = express();
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -9,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:shortUrl', (req, res) => {
-  res.send(req.params.shortUrl)
+  res.send(req.params.shortUrl);
 });
 
 app.post('/api/short-url', (req, res) => {
