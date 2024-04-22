@@ -2,8 +2,8 @@
 A simple full-stack project to shorten a URL.
 
 ## Requirements
-- As a user, I want to enter a URL and get a short URL, so I can share the shorter URL
-- As a user, I can visit a short URL, and navigate to the original long URL
+- As a user, I want to enter a URL, so I can share a short URL
+- As a user, I want to visit a short URL, so I can go to the original URL
 
 ## Routes
 `GET /`
