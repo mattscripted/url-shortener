@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('hello world - edited');
+  res.send('hello world');
 });
 
 app.get('/:shortUrl', (req, res) => {
@@ -18,5 +18,5 @@ app.post('/api/short-url', (req, res) => {
 });
 
 app.listen(8000, () => {
-  console.log('Listening on port 8000 - edited');
+  console.log('Listening on port 8000');
 });
