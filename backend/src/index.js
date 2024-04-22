@@ -3,13 +3,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
-
-// Going to / will simply load the React app
-app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('hello world');
+  res.send('hello world - edited');
 });
 
 app.get('/:shortUrl', (req, res) => {
@@ -20,6 +17,6 @@ app.post('/api/short-url', (req, res) => {
   res.send(req.body.url);
 });
 
-app.listen(8080, () => {
-  console.log('Listening on port 8080');
+app.listen(8000, () => {
+  console.log('Listening on port 8000 - edited');
 });
