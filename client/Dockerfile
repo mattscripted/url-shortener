@@ -1,9 +1,18 @@
 from node:alpine
 
-# TODO: Build client, too
+# Build React app
+WORKDIR /app
+
+COPY /app/package.json .
+RUN npm install
+
+COPY /app .
+
+RUN npm run build
 
 # Setup express server
 WORKDIR /server
+
 COPY /server/package.json .
 RUN npm install
 
