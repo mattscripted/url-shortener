@@ -1,9 +1,12 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '../../app/build')));
+
 app.get('/', (req, res) => {
-  res.send('This route will render the React app to create a short URL');
+  res.sendFile(path.join(__dirname, '../../app/build', 'index.html'))
 });
 
 app.get('/:shortUrl', (req, res) => {
@@ -13,7 +16,7 @@ app.get('/:shortUrl', (req, res) => {
     return res.redirect('http://www.google.com/');
   }
 
-  res.status(400).send('Invalid short URL');
+  res.status(404).send('Invalid short URL');
 });
 
 app.listen(8000, () => {
