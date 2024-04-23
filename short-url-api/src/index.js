@@ -10,6 +10,10 @@ const shortUrls = {
   'google': 'http://www.google.com/'
 }
 
+app.get('/status', (req, res) => {
+  res.send('ok');
+})
+
 app.get('/api/short-url/:shortUrl', (req, res) => {
   const shortUrl = req.params.shortUrl;
 

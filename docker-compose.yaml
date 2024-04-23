@@ -4,15 +4,28 @@ services:
   short-url-api:
     container_name: short-url-api
     build: ./short-url-api
+    command: npm run dev
     ports:
       - 8001:8001
-    # volumes:
-    #   - ./short-url-api:/app
+    develop:
+      watch:
+        - action: sync
+          path: ./short-url-api/src
+          target: /app/src
 
   client:
     container_name: client
     build: ./client
+    command: npm run dev
     ports:
       - 8000:8000
     depends_on:
       - short-url-api
+    develop:
+      watch:
+        - action: sync
+          path: ./client/server
+          target: ./server
+        - action: rebuild
+          path: ./client/app
+          target: ./app

@@ -14,3 +14,15 @@ A simple full-stack project to shorten a URL.
 
 `POST /api/short-url`
 - Given a URL, create a new short URL
+
+## Development
+To run everything;
+
+```bash
+docker-compose watch
+```
+
+To stop everything:
+```bash
+docker-compose down
+```
