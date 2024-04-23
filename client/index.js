@@ -8,7 +8,12 @@ app.get('/', (req, res) => {
 
 app.get('/:shortUrl', (req, res) => {
   const shortUrl = req.params.shortUrl;
-  res.send(`Redirect to the URL referenced by ${shortUrl}, or return a 404 error`);
+
+  if (shortUrl === 'google') {
+    return res.redirect('http://www.google.com/');
+  }
+
+  res.status(400).send('Invalid short URL');
 });
 
 app.listen(8000, () => {
