@@ -12,7 +12,6 @@ const shortUrls = {
 
 app.get('/api/short-url/:shortUrl', (req, res) => {
   const shortUrl = req.params.shortUrl;
-  console.log(shortUrl);
 
   if (shortUrls[shortUrl]) {
     return res.send(shortUrls[shortUrl])
