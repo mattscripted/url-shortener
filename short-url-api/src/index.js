@@ -12,25 +12,56 @@ app.get('/status', (req, res) => {
 })
 
 app.get('/api/short-url/:shortUrlHash', async (req, res) => {
-  // TODO: shortUrlHash is probably better
   const shortUrlHash = req.params.shortUrlHash;
   const shortUrl = await ShortUrl.findOne({ shortUrlHash })
 
   if (shortUrl) {
-    return res.send(shortUrl.url)
+    return res.json({
+      data: {
+        type: 'shortUrl',
+        id: shortUrlHash,
+        attributes: {
+          url: shortUrl.url
+        }
+      },
+    })
   }
 
-  res.status(404).send('Invalid short URL');
+  res.status(404).json({
+    errors: [{
+      status: 404,
+      detail: 'No URL found for provided short URL hash.'
+    }]
+  });
 });
 
 app.post('/api/short-url', async (req, res) => {
-  const url = req.body.url;
+  try {
+    const url = req.body.url;
+    
+    // TODO: Hash to get short URL
+    const shortUrlHash = 'test';
 
-  // TODO: Hash to get short URL
-  const shortUrl = new ShortUrl({ shortUrlHash: 'test', url });
-  await shortUrl.save();
+    const shortUrl = new ShortUrl({ shortUrlHash, url });
+    await shortUrl.save();
 
-  res.send(shortUrl.shortUrlHash);
+    res.json({
+      data: {
+        type: 'shortUrl',
+        id: shortUrlHash,
+        attributes: {
+          url: shortUrl.url
+        }
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      errors: [{
+        status: 500,
+        detail: 'Unable to create short URL.'
+      }]
+    });
+  }
 });
 
 async function main() {

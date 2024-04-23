@@ -15,9 +15,11 @@ app.get('/:shortUrlHash', async (req, res) => {
 
   try {
     const response = await axios.get(`http://short-url-api:8001/api/short-url/${shortUrlHash}`);
-    return res.redirect(response.data);
+    const { url } = response.data.data.attributes;
+
+    res.redirect(url);
   } catch(error) {
-    res.status(404).send('Invalid short URL');
+    res.status(error.response.status).send(error.response.data);
   }
 });
 
