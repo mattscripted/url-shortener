@@ -10,11 +10,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../app/build', 'index.html'))
 });
 
-app.get('/:shortUrl', async (req, res) => {
-  const shortUrl = req.params.shortUrl;
+app.get('/:shortUrlHash', async (req, res) => {
+  const shortUrlHash = req.params.shortUrlHash;
 
   try {
-    const response = await axios.get(`http://short-url-api:8001/api/short-url/${shortUrl}`);
+    const response = await axios.get(`http://short-url-api:8001/api/short-url/${shortUrlHash}`);
     return res.redirect(response.data);
   } catch(error) {
     res.status(404).send('Invalid short URL');

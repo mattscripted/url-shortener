@@ -11,13 +11,13 @@ app.get('/status', (req, res) => {
   res.send('ok');
 })
 
-app.get('/api/short-url/:shortUrl', async (req, res) => {
+app.get('/api/short-url/:shortUrlHash', async (req, res) => {
   // TODO: shortUrlHash is probably better
-  const shortUrl = req.params.shortUrl;
-  const foundShortUrl = await ShortUrl.findOne({ shortUrl })
+  const shortUrlHash = req.params.shortUrlHash;
+  const shortUrl = await ShortUrl.findOne({ shortUrlHash })
 
-  if (foundShortUrl) {
-    return res.send(foundShortUrl.url)
+  if (shortUrl) {
+    return res.send(shortUrl.url)
   }
 
   res.status(404).send('Invalid short URL');
@@ -27,10 +27,10 @@ app.post('/api/short-url', async (req, res) => {
   const url = req.body.url;
 
   // TODO: Hash to get short URL
-  const shortUrl = new ShortUrl({ shortUrl: 'test', url });
+  const shortUrl = new ShortUrl({ shortUrlHash: 'test', url });
   await shortUrl.save();
 
-  res.send(shortUrl.shortUrl);
+  res.send(shortUrl.shortUrlHash);
 });
 
 async function main() {
