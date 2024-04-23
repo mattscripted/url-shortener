@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const shortUrlSchema = new mongoose.Schema({
-  shortUrlHash: String,
+  shortUrlHash: {
+    type: String,
+    index: true,
+  },
   url: String,
 });
 
