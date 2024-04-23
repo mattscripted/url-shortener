@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ShortUrl = require('./models/ShortUrl');
+const { nanoid } = require('nanoid');
 
 const app = express();
 app.use(bodyParser.json());
@@ -39,8 +40,10 @@ app.post('/api/short-url', async (req, res) => {
   try {
     const url = req.body.url;
     
-    // TODO: Hash to get short URL
-    const shortUrlHash = 'test';
+    // Generate a random, mostly unique hash
+    // Note: There could be collisions, so there is probably a better hashing method
+    const shortUrlHash = nanoid();
+    console.log(shortUrlHash);
 
     const shortUrl = new ShortUrl({ shortUrlHash, url });
     await shortUrl.save();
