@@ -43,7 +43,6 @@ app.post('/api/short-url', async (req, res) => {
     // Generate a random, mostly unique hash
     // Note: There could be collisions, so there is probably a better hashing method
     const shortUrlHash = nanoid();
-    console.log(shortUrlHash);
 
     const shortUrl = new ShortUrl({ shortUrlHash, url });
     await shortUrl.save();
