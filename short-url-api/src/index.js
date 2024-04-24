@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -6,6 +7,7 @@ const ShortUrl = require('./models/ShortUrl');
 const { nanoid } = require('nanoid');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/status', (req, res) => {
