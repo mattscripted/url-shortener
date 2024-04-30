@@ -26,6 +26,7 @@ services:
     build: ./frontend
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
     ports:
       - 3000:3000
     depends_on:
