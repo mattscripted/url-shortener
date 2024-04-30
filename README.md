@@ -16,10 +16,9 @@ A simple full-stack project to shorten a URL.
 - Given a URL, create a new short URL
 
 ## Development
-To run everything;
-
+To run everything:
 ```bash
-docker-compose watch
+docker-compose up
 ```
 
 To stop everything:
