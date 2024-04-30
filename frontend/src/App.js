@@ -7,10 +7,17 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 
+function getShortUrlFromHash(shortUrlHash) {
+  return `http://localhost:8000/${shortUrlHash}`;
+}
+
 function App() {
+  const [shortUrlHash, setShortUrlHash] = useState('');
+
   const [toastState, setToastState] = useState({
     isVisible: false,
     header: '',
@@ -49,7 +56,9 @@ function App() {
         url,
       });
 
-      console.log(response);
+      const shortUrlHash = response.data.data.id;
+
+      setShortUrlHash(shortUrlHash);
     } catch (error) {
       showToast({
         header: 'Create a short URL',
@@ -85,6 +94,12 @@ function App() {
               <Button variant="primary" type="submit">
                 Shorten
               </Button>
+              {shortUrlHash ? (
+                <Alert>
+                  <p>Your short URL can be accessed here:</p>
+                  <a href={getShortUrlFromHash(shortUrlHash)}>{getShortUrlFromHash(shortUrlHash)}</a>
+                </Alert>
+              ) : null}
             </Form>
           </Container>
           <ToastContainer position="top-end">
