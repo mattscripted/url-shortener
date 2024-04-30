@@ -1,10 +1,26 @@
 services:
+  database:
+    container_name: database
+    image: mongo
+    volumes:
+      - database-volume:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
   backend:
     build: ./backend
     volumes:
       - ./backend/src:/app/src
     ports:
       - 8000:8000
+    environment:
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: password
+    depends_on:
+      - database
 
   frontend:
     build: ./frontend
@@ -14,3 +30,6 @@ services:
       - 3000:3000
     depends_on:
       - backend
+
+volumes:
+  database-volume:
