@@ -1,50 +1,16 @@
-version: "3.8"
-
 services:
-  short-url-db:
-    container_name: short-url-db
-    image: mongo
+  backend:
+    build: ./backend
     volumes:
-      - short-url-db-volume:/data/db
-    ports:
-      - 27017:27017
-    env_file:
-      - ./env/short-url-db.env
-
-  short-url-api:
-    container_name: short-url-api
-    build: ./short-url-api
-    command: npm run dev
-    ports:
-      - 8001:8001
-    env_file:
-      - ./env/short-url-api.env
-    depends_on:
-      - short-url-db
-    develop:
-      watch:
-        - action: sync
-          path: ./short-url-api/src
-          target: /app/src
-        - action: rebuild
-          path: ./short-url-api/package.json
-
-  client:
-    container_name: client
-    build: ./client
-    command: npm run dev
+      - ./backend/src:/app/src
     ports:
       - 8000:8000
-    depends_on:
-      - short-url-api
-    develop:
-      watch:
-        - action: sync
-          path: ./client/server
-          target: ./server
-        - action: rebuild
-          path: ./client/app
-          target: ./app
 
-volumes:
-  short-url-db-volume:
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/app/src
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
