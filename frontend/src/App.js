@@ -12,7 +12,7 @@ import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 
 function getShortUrlFromHash(shortUrlHash) {
-  return `http://localhost:8000/${shortUrlHash}`;
+  return `${process.env.REACT_APP_BACKEND_URL}/${shortUrlHash}`;
 }
 
 function App() {
@@ -48,11 +48,10 @@ function App() {
   });
 
   const handleSubmit = async (values) => {
-    console.log('submit form', values);
     const { url } = values;
 
     try {
-      const response = await axios.post('http://localhost:8000/api/short-url', {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/short-url`, {
         url,
       });
 
