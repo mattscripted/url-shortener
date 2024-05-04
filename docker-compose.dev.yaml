@@ -1,11 +1,40 @@
 services:
+  database:
+    container_name: database
+    image: mongo
+    volumes:
+      - database-volume:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  backend:
+    build:
+      context: ./backend
+      target: base
+    command: npm run dev
+    volumes:
+      - ./backend/src:/app/src
+    ports:
+      - 8000:8000
+    environment:
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: password
+    depends_on:
+      - database
+
   frontend:
     build:
       context: ./frontend
       target: base
-    command: npm start
+    command: npm run start
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
     ports:
       - 3000:3000
+
+volumes:
+  database-volume:

@@ -18,10 +18,25 @@ A simple full-stack project to shorten a URL.
 ## Development
 To run everything:
 ```bash
-docker-compose up
+docker-compose -f docker-compose.dev.yaml up --build
 ```
+
+To view the app, go to http://localhost:3000/
 
 To stop everything:
 ```bash
-docker-compose down
+docker-compose -f docker-compose.dev.yaml down
+```
+
+## Production
+To run everything:
+```bash
+docker-compose -f docker-compose.production.yaml up --build
+```
+
+To view the app, go to http://localhost/
+
+To stop everything:
+```bash
+docker-compose -f docker-compose.production.yaml down
 ```

@@ -7,13 +7,13 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install
 
+COPY . .
+
 # By specifying "target" as "base", we won't continue on from here
 # Thus, development won't build and run on nginx
 
 # Build for production
 FROM base as build
-COPY public ./public
-COPY src ./src
 RUN npm run build
 
 FROM nginx
