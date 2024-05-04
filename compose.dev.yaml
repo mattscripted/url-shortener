@@ -1,0 +1,17 @@
+services:
+  backend:
+    build:
+      target: base
+    command: npm run dev
+    volumes:
+      - ./backend/src:/app/src
+
+  frontend:
+    build:
+      target: base
+    command: npm run start
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    ports:
+      - 3000:3000
