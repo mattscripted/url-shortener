@@ -39,6 +39,7 @@ app.post('/api/short-url', async (req, res) => {
     const shortUrl = new ShortUrl({ shortUrlHash, url });
     await shortUrl.save();
 
+    // TODO: Do I need to return a nested data object?
     res.json({
       data: {
         type: 'shortUrl',
