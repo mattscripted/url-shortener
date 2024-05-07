@@ -54,9 +54,7 @@ function App() {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/short-url`, {
         url,
       });
-
       const shortUrlHash = response.data.data.id;
-
       setShortUrlHash(shortUrlHash);
     } catch (error) {
       showToast({

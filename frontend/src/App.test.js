@@ -1,4 +1,4 @@
-import { render as rtlRender, screen } from '@testing-library/react';
+import { render as rtlRender, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import App from './App';
@@ -60,13 +60,15 @@ describe('App', () => {
     expect(await screen.findByText(errorMessage)).toBeInTheDocument();
   });
 
-  it('submits the form, and renders success state', async () => {
+  it('submits the form, and renders success state, on API success', async () => {
     const url = 'http://www.google.com/';
+    const shortUrlHash = 'shortUrlHash';
+    const successMessage = 'Your short URL can be accessed here:';
     axios.post.mockResolvedValueOnce({
       data: {
         data: {
           type: 'shortUrl',
-          id: 'short-url-hash',
+          id: shortUrlHash,
           attributes: {
             url,
           }
@@ -78,11 +80,54 @@ describe('App', () => {
     const urlTextbox = getUrlTextbox();
     const submitButton = getSubmitButton();
 
+    expect(screen.queryByText(successMessage)).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: `${process.env.REACT_APP_BACKEND_URL}/${shortUrlHash}` })).not.toBeInTheDocument();
+
     await user.type(urlTextbox, url);
     await user.click(submitButton);
 
-    // expect(axios.post).toHaveBeenCalledWith('/api/short-url')
+    expect(axios.post).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/short-url/), {
+        url
+      }
+    );
 
-    expect(await screen.findByText('Your short URL can be accessed here:')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(successMessage)).toBeInTheDocument();
+      const shortUrlLink = screen.getByRole('link', { name: `${process.env.REACT_APP_BACKEND_URL}/${shortUrlHash}` });
+      expect(shortUrlLink).toHaveAttribute('href', `${process.env.REACT_APP_BACKEND_URL}/${shortUrlHash}`);
+    });
+  });
+
+  it('submits form, and renders error state, on API error', async () => {
+    const url = 'http://www.google.com/';
+    const errorToastMessage = 'The short URL could not be created. Please try again.';
+    axios.post.mockRejectedValueOnce({
+      data: {
+        errors: [{
+          status: 500,
+          detail: 'Unable to create short URL.'
+        }]
+      }
+    });
+
+    const { user, getUrlTextbox, getSubmitButton } = render(<App />);
+    const urlTextbox = getUrlTextbox();
+    const submitButton = getSubmitButton();
+
+    expect(screen.queryByText(errorToastMessage)).not.toBeInTheDocument();
+
+    await user.type(urlTextbox, url);
+    await user.click(submitButton);
+
+    expect(axios.post).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/short-url/), {
+        url
+      }
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(errorToastMessage)).toBeInTheDocument();
+    });
   });
 });
