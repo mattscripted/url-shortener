@@ -1,8 +1,8 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const mockingoose = require('mockingoose');
-const app = require('./index');
-const ShortUrl = require('./models/ShortUrl');
+const app = require('../src/index');
+const ShortUrl = require('../src/models/ShortUrl');
 
 describe('GET /status', () => {
   it('returns "ok"', async () => {
