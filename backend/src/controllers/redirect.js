@@ -1,8 +1,8 @@
-const ShortUrl = require('../models/ShortUrl');
+const shortUrlService = require('../services/shortUrl');
 
 async function redirect(req, res) {
   const shortUrlHash = req.params.shortUrlHash;
-  const shortUrl = await ShortUrl.findOne({ shortUrlHash });
+  const shortUrl = await shortUrlService.get(shortUrlHash);
 
   if (shortUrl) {
     res.redirect(shortUrl.url);

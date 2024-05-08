@@ -1,6 +1,5 @@
-const { body, validationResult } = require('express-validator');
-const { nanoid } = require('nanoid');
-const ShortUrl = require('../models/ShortUrl');
+const { validationResult } = require('express-validator');
+const shortUrlService = require('../services/shortUrl');
 
 async function create(req, res) {
   const result = validationResult(req);
@@ -16,17 +15,12 @@ async function create(req, res) {
 
   try {
     const url = req.body.url;
-    
-    // Generate a random, mostly unique hash
-    // Note: There could be collisions, so there is probably a better hashing method
-    const shortUrlHash = nanoid();
-    const shortUrl = new ShortUrl({ shortUrlHash, url });
-    await shortUrl.save();
+    const shortUrl = await shortUrlService.create({ url });
 
     res.json({
       data: {
         type: 'shortUrl',
-        id: shortUrlHash,
+        id: shortUrl.shortUrlHash,
         attributes: {
           url: shortUrl.url
         }
