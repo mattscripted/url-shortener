@@ -2,27 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const { nanoid } = require('nanoid');
+const redirectRouter = require('./redirect');
 const ShortUrl = require('../models/ShortUrl');
 
 router.get('/status', (req, res) => {
   res.send('ok');
 });
 
-router.get('/:shortUrlHash', async (req, res) => {
-  const shortUrlHash = req.params.shortUrlHash;
-  const shortUrl = await ShortUrl.findOne({ shortUrlHash })
-
-  if (shortUrl) {
-    res.redirect(shortUrl.url);
-  } else {
-    res.status(404).json({
-      errors: [{
-        status: 404,
-        detail: 'No URL found for provided short URL hash.'
-      }]
-    });
-  }
-});
+router.use('/', redirectRouter);
 
 router.post('/api/short-url',
   body('url').isURL(),
