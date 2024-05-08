@@ -10,7 +10,7 @@ function render(ui) {
   rtlRender(ui);
   
   const getUrlTextbox = () => screen.getByRole('textbox', {
-    name: 'Enter a URL to shorten:',
+    name: 'Enter a URL to shorten',
   });
   const getSubmitButton = () => screen.getByRole('button', { name: 'Shorten' });
 

@@ -5,6 +5,9 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
@@ -73,31 +76,40 @@ function App() {
       {({ handleSubmit, handleChange, values, touched, errors }) => (
         <>
           <Container>
-            <Form noValidate onSubmit={handleSubmit}>
-              <Form.Group controlId="formUrl">
-                <Form.Label>Enter a URL to shorten:</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="url"
-                  placeholder="http://www.google.com/"
-                  value={values.url}
-                  onChange={handleChange}
-                  isInvalid={!!errors.url}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.url}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Shorten
-              </Button>
-              {shortUrlHash ? (
-                <Alert>
-                  <p>Your short URL can be accessed here:</p>
-                  <a href={getShortUrlFromHash(shortUrlHash)}>{getShortUrlFromHash(shortUrlHash)}</a>
-                </Alert>
-              ) : null}
-            </Form>
+            <h1>URL Shortener</h1>
+            <Card body>
+              <Form noValidate onSubmit={handleSubmit}>
+                <Row className="mb-3">
+                  <Col xs={12} sm={9}>
+                    <Form.Group controlId="formUrl">
+                      <Form.Control
+                        type="text"
+                        name="url"
+                        aria-label="Enter a URL to shorten"
+                        placeholder="Enter a URL to shorten, e.g. http://www.google.com/"
+                        value={values.url}
+                        onChange={handleChange}
+                        isInvalid={!!errors.url}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.url}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12} sm={3}>
+                    <Button variant="primary" type="submit">
+                      Shorten
+                    </Button>
+                  </Col>
+                </Row>
+                {shortUrlHash ? (
+                  <Alert>
+                    <p>Your short URL can be accessed here:</p>
+                    <a href={getShortUrlFromHash(shortUrlHash)}>{getShortUrlFromHash(shortUrlHash)}</a>
+                  </Alert>
+                ) : null}
+              </Form>
+            </Card>
           </Container>
           <ToastContainer position="top-end">
             <Toast show={toastState.isVisible} onClose={hideToast} autohide>
