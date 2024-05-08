@@ -73,7 +73,7 @@ function App() {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ handleSubmit, handleChange, values, touched, errors }) => (
+      {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
         <>
           <Container>
             <h1>URL Shortener</h1>
@@ -97,7 +97,7 @@ function App() {
                     </Form.Group>
                   </Col>
                   <Col xs={12} sm={3}>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" disabled={isSubmitting}>
                       Shorten
                     </Button>
                   </Col>
