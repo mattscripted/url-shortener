@@ -13,6 +13,7 @@ app.use('/', router);
 ;
 
 async function main() {
+  // Connect to MongoDB
   try {
     const mongodbUrl = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@database:27017`;
     await mongoose.connect(mongodbUrl);
@@ -22,6 +23,7 @@ async function main() {
     return;
   }
 
+  // Connect to Redis
   try {
     const redisUrl = 'redis://cache';
     const redisClient = await redis.createClient({
@@ -35,6 +37,7 @@ async function main() {
     return;
   }
 
+  // Start listening
   app.listen(8000, () => {
     console.log('Listening on port 8000');
   });
