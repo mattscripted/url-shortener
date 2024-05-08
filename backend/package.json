@@ -17,11 +17,13 @@
     "express-validator": "^7.0.1",
     "mongoose": "^8.3.3",
     "nanoid": "^3.3.7",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "redis": "^4.6.13"
   },
   "devDependencies": {
     "jest": "^29.7.0",
     "mockingoose": "^2.16.2",
+    "redis-mock": "^0.56.3",
     "supertest": "^7.0.0"
   }
 }
