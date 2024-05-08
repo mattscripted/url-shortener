@@ -40,3 +40,12 @@ To stop everything:
 ```bash
 docker-compose -f compose.yaml -f compose.production.yaml down
 ```
+
+## Scripts
+To generate a lot of example data:
+```bash
+cd scripts
+node generate-examples.js
+```
+
+This script will take a few minutes to generate one million items.
