@@ -1,4 +1,5 @@
 const { nanoid } = require('nanoid');
+const redisClient = require('../utils/redisClient');
 const ShortUrl = require('../models/ShortUrl');
 
 // TODO: Find a better short hash method
@@ -11,7 +12,29 @@ async function create({ url }) {
 }
 
 async function get(shortUrlHash) {
-  return await ShortUrl.findOne({ shortUrlHash });
+  // Try to use the cache for faster lookup
+  const cachedUrl = await redisClient.get(`short-url-${shortUrlHash}`);
+
+  if (cachedUrl) {
+    return {
+      shortUrlHash,
+      url: cachedUrl,
+    };
+  }
+
+  // Otherwise, check the database, and update the cache
+  const shortUrl = await ShortUrl.findOne({ shortUrlHash });
+
+  if (shortUrl) {
+    await redisClient.set(shortUrlHash, shortUrl.url);
+
+    return {
+      shortUrlHash,
+      url: shortUrl.url,
+    };
+  }
+
+  return null;
 }
 
 module.exports = {

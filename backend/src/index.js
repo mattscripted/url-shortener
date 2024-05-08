@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const redis = require('redis');
+const redisClient = require('./utils/redisClient');
 const router = require('./routes');
 
 const app = express();
@@ -25,10 +25,6 @@ async function main() {
 
   // Connect to Redis
   try {
-    const redisUrl = 'redis://cache';
-    const redisClient = await redis.createClient({
-      url: redisUrl
-    });
     await redisClient.connect();
 
     console.log('Connected to Redis');
