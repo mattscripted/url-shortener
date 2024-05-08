@@ -22,6 +22,7 @@ services:
     ports:
       - 8000:8000
     environment:
+      PORT: 8000
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: password
     depends_on:
