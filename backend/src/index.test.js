@@ -51,6 +51,24 @@ describe('GET /:shortUrlHash', () => {
 });
 
 describe('POST /api/short-url', () => {
+  it('returns a 400 error, if the URL is invalid', async () => {
+    const url = 'not-a-url';
+
+    const response = await request(app)
+      .post('/api/short-url')
+      .send({
+        url,
+      });
+
+    expect(response.status).toEqual(400);
+    expect(response.body).toMatchObject({
+      errors: [{
+        status: 400,
+        detail: 'Invalid URL provided.',
+      }],
+    });
+  });
+
   it('creates a short URL, and returns it', async () => {
     const url = 'http://www.google.com/';
 
@@ -60,15 +78,15 @@ describe('POST /api/short-url', () => {
         url,
       });
 
-      expect(response.status).toEqual(200);
-      expect(response.body).toMatchObject({
-        data: {
-          type: 'shortUrl',
-          id: expect.any(String),
-          attributes: {
-            url,
-          },
+    expect(response.status).toEqual(200);
+    expect(response.body).toMatchObject({
+      data: {
+        type: 'shortUrl',
+        id: expect.any(String),
+        attributes: {
+          url,
         },
+      },
     });
   });
 
@@ -90,7 +108,4 @@ describe('POST /api/short-url', () => {
       }],
     });
   });
-
-  // TODO: Validate URL before submitting
-  // TODO: Handle duplicates
 });

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const { nanoid } = require('nanoid');
 const ShortUrl = require('./models/ShortUrl');
@@ -29,34 +30,48 @@ app.get('/:shortUrlHash', async (req, res) => {
   }
 });
 
-app.post('/api/short-url', async (req, res) => {
-  try {
-    const url = req.body.url;
-    
-    // Generate a random, mostly unique hash
-    // Note: There could be collisions, so there is probably a better hashing method
-    const shortUrlHash = nanoid();
-    const shortUrl = new ShortUrl({ shortUrlHash, url });
-    await shortUrl.save();
+app.post('/api/short-url',
+  body('url').isURL(),
+  async (req, res) => {
+    const result = validationResult(req);
 
-    res.json({
-      data: {
-        type: 'shortUrl',
-        id: shortUrlHash,
-        attributes: {
-          url: shortUrl.url
-        }
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      errors: [{
-        status: 500,
-        detail: 'Unable to create short URL.',
-      }],
-    });
+    if (!result.isEmpty()) {
+      return res.status(400).json({
+        errors: [{
+          status: 400,
+          detail: 'Invalid URL provided.',
+        }],
+      });
+    }
+
+    try {
+      const url = req.body.url;
+      
+      // Generate a random, mostly unique hash
+      // Note: There could be collisions, so there is probably a better hashing method
+      const shortUrlHash = nanoid();
+      const shortUrl = new ShortUrl({ shortUrlHash, url });
+      await shortUrl.save();
+
+      res.json({
+        data: {
+          type: 'shortUrl',
+          id: shortUrlHash,
+          attributes: {
+            url: shortUrl.url
+          }
+        },
+      });
+    } catch (error) {
+      res.status(500).json({
+        errors: [{
+          status: 500,
+          detail: 'Unable to create short URL.',
+        }],
+      });
+    }
   }
-});
+);
 
 async function main() {
   try {
