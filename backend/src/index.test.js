@@ -5,15 +5,6 @@ const app = require('./index');
 
 const ShortUrl = require('./models/ShortUrl');
 
-// beforeAll(done => {
-//   done();
-// });
-
-// afterAll(done => {
-//   mongoose.connection.close();
-//   done();
-// });
-
 describe('example', () => {
   it('adds 2 numbers', () => {
     expect(1 + 2).toEqual(3);
