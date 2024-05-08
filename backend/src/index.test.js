@@ -5,12 +5,6 @@ const app = require('./index');
 
 const ShortUrl = require('./models/ShortUrl');
 
-describe('example', () => {
-  it('adds 2 numbers', () => {
-    expect(1 + 2).toEqual(3);
-  });
-});
-
 describe('GET /status', () => {
   it('returns "ok"', async () => {
     const response = await request(app).get('/status');
