@@ -7,7 +7,7 @@
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "test": "jest",
-    "test:watch": "jest --watch --runInBand"
+    "test:watch": "jest --watch --runInBand --forceExit"
   },
   "author": "",
   "license": "ISC",
