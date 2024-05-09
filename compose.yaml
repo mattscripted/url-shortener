@@ -24,6 +24,7 @@ services:
     environment:
       PORT: 8000
       MONGODB_CONNECT_URL: mongodb://root:password@database:27017/
+      REDIS_CONNECT_URL: redis://cache
     depends_on:
       - database
 
