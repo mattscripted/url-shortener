@@ -23,9 +23,7 @@ services:
       - 8000:8000
     environment:
       PORT: 8000
-      MONGODB_HOST: database:27017
-      MONGODB_USERNAME: root
-      MONGODB_PASSWORD: password
+      MONGODB_CONNECT_URL: mongodb://root:password@database:27017/
     depends_on:
       - database
 
