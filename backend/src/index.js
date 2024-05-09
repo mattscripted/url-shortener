@@ -13,7 +13,7 @@ app.use('/', router);
 async function main() {
   // Connect to MongoDB
   try {
-    const mongodbUrl = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@database:27017`;
+    const mongodbUrl = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}`;
     await mongoose.connect(mongodbUrl);
     console.log('Connected to MongoDB');    
   } catch (error) {
