@@ -1,16 +1,21 @@
 # url-shortener
 A simple full-stack project to shorten a URL.
 
+- Frontend: https://url-shortener-2947.onrender.com/
+- Backend: https://url-shortener-backend-v2u6.onrender.com
+
 ## Requirements
 - As a user, I want to enter a URL, so I can share a short URL
 - As a user, I want to visit a short URL, so I can go to the original URL
 
 ## Routes
+### Frontend
 `GET /`
 - Visit form to create a short URL for a URL
 
-`GET /:shortUrl`
-- Redirect to URL referenced by `shortUrl`
+### Backend
+`GET /:shortUrlHash`
+- Redirect to URL referenced by `shortUrlHash`
 
 `POST /api/short-url`
 - Given a URL, create a new short URL
@@ -49,3 +54,11 @@ node generate-examples.js
 ```
 
 This script will take a few minutes to generate one million items.
+
+## Hosting
+- Render
+  - Frontend (static site)
+  - Backend (web service)
+  - Cache (Redis)
+- MongoDB Atlas
+  - Database (MongoDB)
