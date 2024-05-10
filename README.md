@@ -2,7 +2,7 @@
 A simple full-stack project to shorten a URL.
 
 - Frontend: https://url-shortener-2947.onrender.com/
-- Backend: https://url-shortener-backend-v2u6.onrender.com
+- Backend: https://url-shortener-backend-v2u6.onrender.com/
 
 ## Requirements
 - As a user, I want to enter a URL, so I can share a short URL
@@ -21,7 +21,7 @@ A simple full-stack project to shorten a URL.
 - Given a URL, create a new short URL
 
 ## Development
-To run everything:
+To run everything locally:
 ```bash
 docker-compose -f compose.yaml -f compose.dev.yaml up --build
 ```
@@ -33,8 +33,8 @@ To stop everything:
 docker-compose -f compose.yaml -f compose.dev.yaml down
 ```
 
-## Production
-To run everything:
+### Simulating Production
+To simulate production locally:
 ```bash
 docker-compose -f compose.yaml -f compose.production.yaml up --build
 ```
@@ -46,16 +46,16 @@ To stop everything:
 docker-compose -f compose.yaml -f compose.production.yaml down
 ```
 
-## Scripts
+### Scripts
 To generate a lot of example data:
 ```bash
 cd scripts
 node generate-examples.js
 ```
 
-This script will take a few minutes to generate one million items.
+This script will take about 20 minutes to generate one million items.
 
-## Hosting
+## Production Hosting
 - Render
   - Frontend (static site)
   - Backend (web service)
