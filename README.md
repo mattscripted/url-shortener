@@ -1,8 +1,8 @@
 # url-shortener
 A simple full-stack project to shorten a URL.
 
-- Frontend: https://url-shortener-2947.onrender.com/
-- Backend: https://url-shortener-backend-v2u6.onrender.com/
+- Frontend: (removed)
+- Backend: (removed)
 
 ## Requirements
 - As a user, I want to enter a URL, so I can share a short URL
